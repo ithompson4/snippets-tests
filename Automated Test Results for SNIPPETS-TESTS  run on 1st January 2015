@@ -1,0 +1,299 @@
+            [sys.executable, 'setup.py', 'bdist_wheel'],
+>           cwd=str(temp_pkg))
+
+Lib\site-packages\wheel\test\test_tagopt.py:105:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+popenargs = (['c:\\python27\\python.exe', 'setup.py', 'bdist_wheel'],)
+kwargs = {'cwd': 'c:\\users\\Iryna\\appdata\\local\\temp\\tmp01ybm9'}
+retcode = 1, cmd = ['c:\\python27\\python.exe', 'setup.py', 'bdist_wheel']
+
+    def check_call(*popenargs, **kwargs):
+        """Run command with arguments.  Wait for command to complete.  If
+        the exit code was zero then return, otherwise raise
+        CalledProcessError.  The CalledProcessError object will have the
+        return code in the returncode attribute.
+
+        The arguments are the same as for the Popen constructor.  Example:
+
+        check_call(["ls", "-l"])
+        """
+        retcode = call(*popenargs, **kwargs)
+        if retcode:
+            cmd = kwargs.get("args")
+            if cmd is None:
+                cmd = popenargs[0]
+>           raise CalledProcessError(retcode, cmd)
+E           CalledProcessError: Command '['c:\\python27\\python.exe', 'setup.py
+, 'bdist_wheel']' returned non-zero exit status 1
+
+c:\python27\lib\subprocess.py:540: CalledProcessError
+---------------------------- Captured stderr call -----------------------------
+usage: setup.py [global_opts] cmd1 [cmd1_opts] [cmd2 [cmd2_opts] ...]
+   or: setup.py --help [cmd1 cmd2 ...]
+   or: setup.py --help-commands
+   or: setup.py cmd --help
+
+error: invalid command 'bdist_wheel'
+_________________________________ test_keygen _________________________________
+
+    def test_keygen():
+        def get_keyring():
+            WheelKeys, keyring = tool.get_keyring()
+
+            class WheelKeysTest(WheelKeys):
+                def save(self):
+                    pass
+
+            class keyringTest:
+                backend = keyring.backend
+                class backends:
+                    file = keyring.backends.file
+                @classmethod
+                def get_keyring(cls):
+                    class keyringTest2:
+                        pw = None
+                        def set_password(self, a, b, c):
+                            self.pw = c
+                        def get_password(self, a, b):
+                            return self.pw
+
+                    return keyringTest2()
+
+            return WheelKeysTest, keyringTest
+
+>       tool.keygen(get_keyring=get_keyring)
+
+Lib\site-packages\wheel\test\test_tool.py:28:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+Lib\site-packages\wheel\tool\__init__.py:38: in keygen
+    WheelKeys, keyring = get_keyring()
+Lib\site-packages\wheel\test\test_tool.py:5: in get_keyring
+    WheelKeys, keyring = tool.get_keyring()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    def get_keyring():
+        try:
+            from ..signatures import keys
+            import keyring
+        except ImportError:
+>           raise WheelError("Install wheel[signatures] (requires keyring, pyxd
+) for signatures.")
+E           WheelError: Install wheel[signatures] (requires keyring, pyxdg) for
+signatures.
+
+Lib\site-packages\wheel\tool\__init__.py:33: WheelError
+===================== 9 failed, 19 passed in 4.59 seconds =====================
+
+(snippets) C:\Users\Iryna\snippets>workon affiliates
+(affiliates) C:\Users\Iryna\Documents\GitHub\Affiliates-Tests>py.test --drive
+=Firefox
+============================= test session starts =============================
+platform win32 -- Python 2.7.11 -- py-1.4.31 -- pytest-2.7.3
+rootdir: C:\Users\Iryna\Documents\GitHub\Affiliates-Tests, inifile: setup.cfg
+plugins: html, selenium, selenium, variables
+collected 7 items
+
+tests\test_about_page.py E
+tests\test_profile.py ssss
+tests\test_start_page.py EE
+
+=================================== ERRORS ====================================
+______ ERROR at setup of TestAboutPage.test_about_page_has_proper_layout ______
+
+request = <SubRequest 'selenium' for <Function 'test_about_page_has_proper_layo
+t'>>
+capabilities = {'tags': ['affiliates']}
+
+    @pytest.fixture
+    def selenium(request, capabilities):
+        """Returns a WebDriver instance based on options and capabilities"""
+        from .driver import start_driver
+>       driver = start_driver(request.node, capabilities)
+
+..\..\..\affiliates\lib\site-packages\pytest_selenium\pytest_selenium.py:75:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\affiliates\lib\site-packages\pytest_selenium\driver.py:26: in start_dr
+ver
+    options.driver.lower()))(item, _capabilities)
+..\..\..\affiliates\lib\site-packages\pytest_selenium\driver.py:66: in firefox_
+river
+    return webdriver.Firefox(**kwargs)
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\webdriver.py:7
+: in __init__
+    self.binary, timeout),
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\extension_conn
+ction.py:49: in __init__
+    self.binary.launch_browser(self.profile)
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\firefox_binary
+py:68: in launch_browser
+    self._wait_until_connectable()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <selenium.webdriver.firefox.firefox_binary.FirefoxBinary object at 0x031
+5EF0>
+
+    def _wait_until_connectable(self):
+        """Blocks until the extension is connectable in the firefox."""
+        count = 0
+        while not utils.is_connectable(self.profile.port):
+            if self.process.poll() is not None:
+                # Browser has exited
+                raise WebDriverException("The browser appears to have exited "
+                      "before we could connect. If you specified a log_file in
+
+                      "the FirefoxBinary constructor, check it for details.")
+            if count == 30:
+                self.kill()
+>               raise WebDriverException("Can't load the profile. Profile "
+                      "Dir: %s If you specified a log_file in the "
+                      "FirefoxBinary constructor, check it for details.")
+E               WebDriverException: Message: Can't load the profile. Profile Di
+: %s If you specified a log_file in the FirefoxBinary constructor, check it for
+details.
+
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\firefox_binary
+py:103: WebDriverException
+______ ERROR at setup of TestStartPage.test_start_page_has_proper_titles ______
+
+request = <SubRequest 'selenium' for <Function 'test_start_page_has_proper_titl
+s'>>
+capabilities = {'tags': ['affiliates']}
+
+    @pytest.fixture
+    def selenium(request, capabilities):
+        """Returns a WebDriver instance based on options and capabilities"""
+        from .driver import start_driver
+>       driver = start_driver(request.node, capabilities)
+
+..\..\..\affiliates\lib\site-packages\pytest_selenium\pytest_selenium.py:75:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\affiliates\lib\site-packages\pytest_selenium\driver.py:26: in start_dr
+ver
+    options.driver.lower()))(item, _capabilities)
+..\..\..\affiliates\lib\site-packages\pytest_selenium\driver.py:66: in firefox_
+river
+    return webdriver.Firefox(**kwargs)
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\webdriver.py:7
+: in __init__
+    self.binary, timeout),
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\extension_conn
+ction.py:49: in __init__
+    self.binary.launch_browser(self.profile)
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\firefox_binary
+py:68: in launch_browser
+    self._wait_until_connectable()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <selenium.webdriver.firefox.firefox_binary.FirefoxBinary object at 0x034
+32F0>
+
+    def _wait_until_connectable(self):
+        """Blocks until the extension is connectable in the firefox."""
+        count = 0
+        while not utils.is_connectable(self.profile.port):
+            if self.process.poll() is not None:
+                # Browser has exited
+                raise WebDriverException("The browser appears to have exited "
+                      "before we could connect. If you specified a log_file in
+
+                      "the FirefoxBinary constructor, check it for details.")
+            if count == 30:
+                self.kill()
+>               raise WebDriverException("Can't load the profile. Profile "
+                      "Dir: %s If you specified a log_file in the "
+                      "FirefoxBinary constructor, check it for details.")
+E               WebDriverException: Message: Can't load the profile. Profile Di
+: %s If you specified a log_file in the FirefoxBinary constructor, check it for
+details.
+
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\firefox_binary
+py:103: WebDriverException
+______ ERROR at setup of TestStartPage.test_login_logout_works_properly _______
+
+request = <SubRequest 'selenium' for <Function 'test_login_logout_works_properl
+'>>
+capabilities = {'tags': ['affiliates']}
+
+    @pytest.fixture
+    def selenium(request, capabilities):
+        """Returns a WebDriver instance based on options and capabilities"""
+        from .driver import start_driver
+>       driver = start_driver(request.node, capabilities)
+
+..\..\..\affiliates\lib\site-packages\pytest_selenium\pytest_selenium.py:75:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\..\affiliates\lib\site-packages\pytest_selenium\driver.py:26: in start_dr
+ver
+    options.driver.lower()))(item, _capabilities)
+..\..\..\affiliates\lib\site-packages\pytest_selenium\driver.py:66: in firefox_
+river
+    return webdriver.Firefox(**kwargs)
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\webdriver.py:7
+: in __init__
+    self.binary, timeout),
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\extension_conn
+ction.py:49: in __init__
+    self.binary.launch_browser(self.profile)
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\firefox_binary
+py:68: in launch_browser
+    self._wait_until_connectable()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <selenium.webdriver.firefox.firefox_binary.FirefoxBinary object at 0x034
+6FB0>
+
+    def _wait_until_connectable(self):
+        """Blocks until the extension is connectable in the firefox."""
+        count = 0
+        while not utils.is_connectable(self.profile.port):
+            if self.process.poll() is not None:
+                # Browser has exited
+                raise WebDriverException("The browser appears to have exited "
+                      "before we could connect. If you specified a log_file in
+
+                      "the FirefoxBinary constructor, check it for details.")
+            if count == 30:
+                self.kill()
+>               raise WebDriverException("Can't load the profile. Profile "
+                      "Dir: %s If you specified a log_file in the "
+                      "FirefoxBinary constructor, check it for details.")
+E               WebDriverException: Message: Can't load the profile. Profile Di
+: %s If you specified a log_file in the FirefoxBinary constructor, check it for
+details.
+
+..\..\..\affiliates\lib\site-packages\selenium\webdriver\firefox\firefox_binary
+py:103: WebDriverException
+==================== 4 skipped, 3 error in 184.95 seconds =====================
+
+(affiliates) C:\Users\Iryna\Documents\GitHub\Affiliates-Tests>workon snippets
+(snippets) C:\Users\Iryna\Documents\GitHub\snippets-tests>pip install -Ur req
+irements.txt
+Collecting beautifulsoup4==4.4.1 (from -r requirements.txt (line 1))
+  Using cached beautifulsoup4-4.4.1-py2-none-any.whl
+Collecting pytest==2.3.5 (from -r requirements.txt (line 2))
+  Downloading pytest-2.3.5.tar.gz (426kB)
+    100% |################################| 430kB 694kB/s
+Collecting requests==2.8.1 (from -r requirements.txt (line 3))
+  Using cached requests-2.8.1-py2.py3-none-any.whl
+Collecting py>=1.4.13dev6 (from pytest==2.3.5->-r requirements.txt (line 2))
+  Using cached py-1.4.31-py2.py3-none-any.whl
+Building wheels for collected packages: pytest
+  Running setup.py bdist_wheel for pytest
+  Stored in directory: C:\Users\Iryna\AppData\Local\pip\Cache\wheels\e6\e1\96
+9b4a8a9b85f09e453731510339eb5ace2ca379bfdbde2ac17c
+Successfully built pytest
+Installing collected packages: beautifulsoup4, py, pytest, requests
+Successfully installed beautifulsoup4-4.4.1 py-1.4.31 pytest-2.3.5 requests-2.8
+1
+
+(snippets) C:\Users\Iryna\Documents\GitHub\snippets-tests>py.test tests/test_
+nippets.py
+============================ test session starts =============================
+platform win32 -- Python 2.7.11 -- pytest-2.3.5
+collected 9 items
+
+tests/test_snippets.py .........
+
+========================== 9 passed in 7.91 seconds ==========================
+
